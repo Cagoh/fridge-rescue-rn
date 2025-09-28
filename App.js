@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useContext } from "react";
+import { ActivityIndicator } from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { StatusBar } from "expo-status-bar";
+import {
+  Rubik_400Regular,
+  Rubik_700Bold,
+  useFonts,
+} from "@expo-google-fonts/rubik";
+import { NavigationContainer } from "@react-navigation/native";
+
+import TabNavigator from "./navigation/TabNavigator";
+import AuthStackNavigator from "./navigation/AuthStackNavigator";
+import { Colors } from "./styles/colors";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+
+function NavigationApp() {
+  const { isAuthenticated } = useContext(AuthContext);
+
+  return isAuthenticated ? <TabNavigator /> : <AuthStackNavigator />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  const [fontsLoaded] = useFonts({
+    Rubik_400Regular,
+    Rubik_700Bold,
+  });
+
+  if (!fontsLoaded)
+    return <ActivityIndicator size="large" color={Colors.PRIMARY} />;
+
+  return (
+    <AuthProvider>
+      <NavigationContainer>
+        <NavigationApp />
+      </NavigationContainer>
+      <StatusBar style="dark" />
+    </AuthProvider>
+  );
+}
