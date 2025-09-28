@@ -3,21 +3,21 @@ import { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
 function MyRecipesScreen({ route }) {
-  const [myDogs, setMyDogs] = useState([]);
+  const [myRecipes, setMyRecipes] = useState([]);
 
   useEffect(() => {
-    if (route.params?.dog) {
-      setMyDogs((prevDogs) => [
-        ...prevDogs,
-        { id: randomUUID(), url: route.params?.dog },
+    if (route.params?.recipe) {
+      setMyRecipes((prevRecipes) => [
+        ...prevRecipes,
+        { id: randomUUID(), url: route.params?.recipe },
       ]);
     }
-  }, [route.params?.dog]);
+  }, [route.params?.recipe]);
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={myDogs}
+        data={myRecipes}
         // keyExtractor={}
         renderItem={({ item }) => (
           <Image source={{ uri: item.url }} style={styles.image} />
