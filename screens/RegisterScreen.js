@@ -9,16 +9,30 @@ import {
 } from "react-native";
 import { Colors } from "../styles/colors";
 import Button from "../components/Button";
+import axios from "axios";
+
+const API_URL = "http://10.167.34.222:8080/register";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleRegister = () => {
-    Alert.alert(
-      "Mock Registration",
-      "This is just a mock registration function."
-    );
+  const handleRegister = async () => {
+    try {
+      const loginData = {
+        userName: username,
+        password: password,
+      };
+
+      const response = await axios.post(API_URL, loginData);
+      if (response && response.data) {
+        setError("");
+        navigation.navigate("Login");
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
@@ -46,6 +60,7 @@ function RegisterScreen({ navigation }) {
           placeholderTextColor={Colors.PRIMARY_LIGHT_2}
           selectionColor={Colors.PRIMARY_LIGHT_2}
         />
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <View style={styles.buttonsContainer}>
           <Button onPress={handleRegister}>Register</Button>
           <Button onPress={() => navigation.goBack()}>Back to Login</Button>
@@ -83,6 +98,11 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     gap: 10,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 8,
+    fontFamily: "Rubik_400Regular",
   },
 });
 
