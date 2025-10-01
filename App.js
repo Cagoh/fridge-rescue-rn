@@ -13,6 +13,7 @@ import TabNavigator from "./navigation/TabNavigator";
 import AuthStackNavigator from "./navigation/AuthStackNavigator";
 import { Colors } from "./styles/colors";
 import { AuthContext, AuthProvider } from "./context/AuthContext";
+import { RecipeProvider } from "./context/RecipeContext";
 
 function NavigationApp() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -31,10 +32,12 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <NavigationApp />
-      </NavigationContainer>
-      <StatusBar style="dark" />
+      <RecipeProvider>      
+        <NavigationContainer>
+          <NavigationApp />
+        </NavigationContainer>
+        <StatusBar style="dark" />
+      </RecipeProvider>
     </AuthProvider>
   );
 }

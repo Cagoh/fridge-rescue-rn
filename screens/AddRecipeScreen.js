@@ -6,6 +6,7 @@ import {
   launchImageLibraryAsync,
   useCameraPermissions,
 } from "expo-image-picker";
+import { useRecipes } from "../context/RecipeContext";
 
 const imageOptions = {
   mediaTypes: ["images"],
@@ -17,6 +18,7 @@ const imageOptions = {
 function AddRecipeScreen({ navigation }) {
   const [image, setImage] = useState(null);
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
+  const { addRecipe } = useRecipes();
   
   // Recipe form state
   const [recipeName, setRecipeName] = useState("");
@@ -56,7 +58,6 @@ function AddRecipeScreen({ navigation }) {
   };
 
   const handleSaveRecipe = () => {
-    // Validate that required fields are filled
     if (!recipeName.trim()) {
       alert("Please enter a recipe name.");
       return;
@@ -72,7 +73,6 @@ function AddRecipeScreen({ navigation }) {
       return;
     }
 
-    // For now, just log the recipe data
     const recipeData = {
       name: recipeName,
       image: image,
@@ -83,11 +83,20 @@ function AddRecipeScreen({ navigation }) {
       servings: servings,
     };
     
-    console.log("Recipe saved:", recipeData);
+    addRecipe(recipeData);
     alert("Recipe saved successfully!");
     
-    // Navigate back or clear form
-    // navigation.goBack();
+    // Clear form
+    setRecipeName("");
+    setImage(null);
+    setIngredients("");
+    setInstructions("");
+    setPrepTime("");
+    setCookTime("");
+    setServings("");
+    
+    // Navigate to MyRecipes
+    navigation.navigate("MyRecipes");
   };
 
   return (
