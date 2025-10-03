@@ -11,7 +11,7 @@ import { Colors } from "../styles/colors";
 import Button from "../components/Button";
 import axios from "axios";
 
-const API_URL = "http://10.167.34.222:8080/register";
+const API_URL = "http://10.0.2.2:8080/register";
 
 function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -31,7 +31,7 @@ function RegisterScreen({ navigation }) {
         navigation.navigate("Login");
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.response.data.message);
     }
   };
 

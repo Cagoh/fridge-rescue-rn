@@ -20,7 +20,7 @@ import Button from "../components/Button";
 import AppHeader from "../components/AppHeader";
 // import  AuthContext  from "../context/AuthContext";
 
-const API_URL = "http://10.167.34.222:8080/login";
+const API_URL = "http://10.0.2.2:8080/login";
 
 function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
@@ -49,7 +49,7 @@ function LoginScreen({ navigation }) {
         login(username, password);
       }
     } catch (err) {
-      setError(err.message);
+      setError(err.response.data.message);
     }
 
     // const found = members.find(
