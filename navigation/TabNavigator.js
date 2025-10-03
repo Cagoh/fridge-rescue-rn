@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Colors } from "../styles/colors";
 import ExploreScreen from "../screens/ExploreScreen";
 import { Ionicons } from "@expo/vector-icons";
-import MyRecipesScreen from "../screens/MyRecipesScreen";
+import MyRecipesStackNavigator from "./MyRecipesStackNavigator";
 import AddRecipeScreen from "../screens/AddRecipeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
@@ -28,10 +28,10 @@ function TabNavigator() {
       />
       <Tab.Screen
         name="MyRecipes"
-        component={MyRecipesScreen}
+        component={MyRecipesStackNavigator}
         options={{
           title: "My Recipes",
-
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="happy-outline" size={size} color={color} />
           ),
