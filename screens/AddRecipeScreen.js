@@ -100,9 +100,14 @@ function AddRecipeScreen({ navigation }) {
   };
 
   return (
+
+    
+
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.container}>
         <Text style={styles.title}>Add a Recipe!</Text>
+
+        
 
         {/* Photo Section */}
         <View style={styles.section}>
